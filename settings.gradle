@@ -1,0 +1,5 @@
+rootProject.name = 'image-resize'
+include 'image-resize-model'
+include 'image-resize-handler'
+include 'image-resize-client'
+

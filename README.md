@@ -1,2 +1,2 @@
-# image-resizer
-AWS Lambda Image Resizer
+# image-resize
+AWS Lambda modules for resizing images
