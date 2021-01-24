@@ -3,6 +3,7 @@ version '0.2'
 
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 repositories {
     mavenLocal()
@@ -11,4 +12,18 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            name "githubReleases"
+            url "$System.env.LOCAL_GITHUB_REPO"
+        }
+    }
 }

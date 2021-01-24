@@ -17,15 +17,16 @@ public class ImageClientIntegrationTest {
     @Test
     public void endToEndTest() throws IOException {
         // given
-        System.setProperty("aws.accessKeyId", "YOUR_AWS_ACCESS_KEY");
-        System.setProperty("aws.secretKey", "YOUR_AWS_SECRET_KEY");
+        String accessKey = System.getProperty("aws.accessKeyId", "YOUR_AWS_ACCESS_KEY");
+        String accessSecret = System.getProperty("aws.secretKey", "YOUR_AWS_SECRET_KEY");
+        String region = System.getProperty("aws.region", "YOUR_AWS_REGION");
 
         URL testImageUrl = getClass().getResource("testImage.jpg");
         String resizeFileNamePrefix = "resizeTest";
         Integer[] sizes = new Integer[]{640, 320, 50};
         byte[] originalImageAsByteArray = Files.readAllBytes(new File(testImageUrl.getFile()).toPath());
 
-        ImageResizerClient client = new ImageResizerClient();
+        ImageResizerClient client = new ImageResizerClient(accessKey, accessSecret, region);
 
         Request request = new Request();
         request.setSizes(sizes);

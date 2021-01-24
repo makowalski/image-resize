@@ -1,7 +1,8 @@
 package com.makowal.image.resize;
 
 
-import com.amazonaws.regions.Regions;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.lambda.AWSLambdaClientBuilder;
 import com.amazonaws.services.lambda.invoke.LambdaInvokerFactory;
 
@@ -9,9 +10,18 @@ public class ImageResizerClient {
 
     private final ImageLambdaClient lambdaClient;
 
-    public ImageResizerClient() {
-        final AWSLambdaClientBuilder clientBuilder = AWSLambdaClientBuilder.standard();
-        clientBuilder.withRegion(Regions.US_EAST_1);
+    public ImageResizerClient(String accessKey, String secretKey, String region) {
+        AWSLambdaClientBuilder clientBuilder = AWSLambdaClientBuilder
+                .standard()
+                .withCredentials(
+                        new AWSStaticCredentialsProvider(
+                                new BasicAWSCredentials(
+                                        accessKey,
+                                        secretKey
+                                )
+                        )
+                )
+                .withRegion(region);
 
         this.lambdaClient = LambdaInvokerFactory.builder()
                 .lambdaClient(clientBuilder.build())
